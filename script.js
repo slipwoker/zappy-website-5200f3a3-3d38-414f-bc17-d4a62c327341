@@ -903,6 +903,8 @@ window.onload = function() {
 
 
 
+
+
 // Navbar Mobile Menu Toggle and Contrast Fix
 (function() {
   // Use 'load' event instead of 'DOMContentLoaded' to ensure we run AFTER all other scripts
@@ -977,31 +979,55 @@ window.onload = function() {
       const isRTL = htmlLang === 'he' || htmlLang === 'ar';
       
       criticalCSS.textContent = `
-        /* Override any CSS rules that break mobile navigation positioning */
-        .mobile-toggle,
-        .phone-header-btn {
-          position: absolute !important;
-          top: 15px !important;
-          z-index: 1001 !important;
-          display: flex !important;
-          align-items: center !important;
-          justify-content: center !important;
+        /* Hide mobile buttons on desktop, show only on mobile */
+        @media (min-width: 769px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            display: none !important;
+          }
         }
         
-        .mobile-toggle {
-          ${isRTL ? 'right: 20px !important; left: auto !important;' : 'left: 20px !important; right: auto !important;'}
-        }
-        
-        .phone-header-btn {
-          ${isRTL ? 'left: 20px !important; right: auto !important;' : 'right: 20px !important; left: auto !important;'}
-        }
-        
-        /* Ensure SVG icons are visible */
-        .mobile-toggle svg,
-        .phone-header-btn svg {
-          width: 24px !important;
-          height: 24px !important;
-          display: block !important;
+        /* Show and position mobile buttons correctly on mobile */
+        @media (max-width: 768px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            position: absolute !important;
+            top: 15px !important;
+            z-index: 1001 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 50% !important;
+            background: var(--primary, #FF7A1F) !important;
+            border: none !important;
+            cursor: pointer !important;
+            padding: 8px !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+          }
+          
+          .mobile-toggle {
+            ${isRTL ? 'right: 20px !important; left: auto !important;' : 'left: 20px !important; right: auto !important;'}
+          }
+          
+          .phone-header-btn {
+            ${isRTL ? 'left: 20px !important; right: auto !important;' : 'right: 20px !important; left: auto !important;'}
+          }
+          
+          /* Ensure SVG icons are visible with white color */
+          .mobile-toggle svg,
+          .phone-header-btn svg {
+            width: 24px !important;
+            height: 24px !important;
+            display: block !important;
+          }
+          
+          .mobile-toggle svg path,
+          .phone-header-btn svg path {
+            stroke: white !important;
+            fill: white !important;
+          }
         }
       `;
       
@@ -1155,6 +1181,8 @@ window.onload = function() {
     console.log('[Navbar] Mobile menu initialized successfully');
   });
 })();
+
+
 
 
 
