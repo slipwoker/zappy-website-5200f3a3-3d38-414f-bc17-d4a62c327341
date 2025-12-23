@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dancing-queen-5200f3a3.zappy5.app/sitemap.xml
+Sitemap: https://dancing-queen-1.zappy5.app/sitemap.xml

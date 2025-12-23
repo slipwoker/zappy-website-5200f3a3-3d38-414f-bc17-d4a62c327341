@@ -896,3 +896,223 @@ window.onload = function() {
         })();
     })(); // End of IIFE
     
+
+
+
+
+// Navbar Mobile Menu Toggle and Contrast Fix
+(function() {
+  // Use 'load' event instead of 'DOMContentLoaded' to ensure we run AFTER all other scripts
+  window.addEventListener('load', function() {
+    
+    // FIX MOBILE BUTTON CONTRAST
+    // Detect navbar background color and apply contrasting color to mobile buttons
+    const navbar = document.querySelector('.navbar, nav, header');
+    if (!navbar) {
+      console.log('[Navbar] Navbar element not found');
+      return;
+    }
+    
+    const computedStyle = window.getComputedStyle(navbar);
+    let bgColor = computedStyle.backgroundColor;
+    
+    console.log('[Navbar] Initial navbar background:', bgColor);
+    
+    // Check if background is transparent or rgba with 0 alpha
+    const isTransparent = bgColor === 'transparent' || 
+                         bgColor === 'rgba(0, 0, 0, 0)' ||
+                         (bgColor.startsWith('rgba') && bgColor.includes(', 0)'));
+    
+    if (isTransparent) {
+      // Check for background-image or gradient
+      const bgImage = computedStyle.backgroundImage;
+      if (bgImage && bgImage !== 'none') {
+        console.log('[Navbar] Navbar has background image/gradient, using dark text');
+        bgColor = 'rgb(240, 240, 240)'; // Assume light background
+      } else {
+        // Transparent navbar - check body background
+        const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+        console.log('[Navbar] Navbar transparent, using body background:', bodyBg);
+        bgColor = bodyBg;
+      }
+    }
+    
+    // Calculate luminance to determine if background is light or dark
+    const rgb = bgColor.match(/\d+/g);
+    if (rgb && rgb.length >= 3) {
+      const r = parseInt(rgb[0]);
+      const g = parseInt(rgb[1]);
+      const b = parseInt(rgb[2]);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      
+      // Apply contrasting color - use dark text for light backgrounds
+      const contrastColor = luminance > 0.5 ? '#1F1F1F' : '#FFFFFF';
+      const mobileToggle = document.querySelector('.mobile-toggle');
+      const phoneBtn = document.querySelector('.phone-header-btn');
+      
+      if (mobileToggle) {
+        mobileToggle.style.color = contrastColor + ' !important';
+        mobileToggle.style.setProperty('color', contrastColor, 'important');
+      }
+      if (phoneBtn) {
+        phoneBtn.style.color = contrastColor + ' !important';
+        phoneBtn.style.setProperty('color', contrastColor, 'important');
+      }
+      
+      console.log('[Navbar] Contrast fix applied:', { 
+        bgColor, 
+        luminance: luminance.toFixed(2), 
+        contrastColor,
+        buttons: { mobileToggle: !!mobileToggle, phoneBtn: !!phoneBtn }
+      });
+      
+      // FIX ICON SIZES - Ensure SVGs are properly sized and visible
+      if (mobileToggle) {
+        // Force positioning for visibility
+        mobileToggle.style.position = 'absolute';
+        mobileToggle.style.top = '15px';
+        mobileToggle.style.zIndex = '1001';
+        
+        // Position based on language direction
+        const htmlLang = document.documentElement.lang || 'en';
+        if (htmlLang === 'he' || htmlLang === 'ar') {
+          mobileToggle.style.right = '20px';
+          mobileToggle.style.left = 'auto';
+        } else {
+          mobileToggle.style.left = '20px';
+          mobileToggle.style.right = 'auto';
+        }
+        
+        const hamburgerIcon = mobileToggle.querySelector('.hamburger-icon');
+        const closeIcon = mobileToggle.querySelector('.close-icon');
+        
+        if (hamburgerIcon) {
+          hamburgerIcon.style.width = '24px';
+          hamburgerIcon.style.height = '24px';
+          hamburgerIcon.style.display = 'block'; // Show hamburger by default
+          console.log('[Navbar] Hamburger icon sized and shown');
+        }
+        if (closeIcon) {
+          closeIcon.style.width = '24px';
+          closeIcon.style.height = '24px';
+          closeIcon.style.display = 'none'; // Hide close icon by default
+          console.log('[Navbar] Close icon sized and hidden');
+        }
+        
+        console.log('[Navbar] Mobile toggle positioned:', {
+          lang: htmlLang,
+          position: htmlLang === 'he' || htmlLang === 'ar' ? 'right: 20px' : 'left: 20px'
+        });
+      }
+      
+      if (phoneBtn) {
+        // Force positioning for visibility
+        phoneBtn.style.position = 'absolute';
+        phoneBtn.style.top = '15px';
+        phoneBtn.style.zIndex = '1001';
+        
+        // Position opposite to mobile toggle
+        const htmlLang = document.documentElement.lang || 'en';
+        if (htmlLang === 'he' || htmlLang === 'ar') {
+          phoneBtn.style.left = '20px';
+          phoneBtn.style.right = 'auto';
+        } else {
+          phoneBtn.style.right = '20px';
+          phoneBtn.style.left = 'auto';
+        }
+        
+        const phoneIcon = phoneBtn.querySelector('svg');
+        if (phoneIcon) {
+          phoneIcon.style.width = '24px';
+          phoneIcon.style.height = '24px';
+          phoneIcon.setAttribute('width', '24');
+          phoneIcon.setAttribute('height', '24');
+          console.log('[Navbar] Phone icon sized to 24x24');
+        }
+        
+        console.log('[Navbar] Phone button positioned:', {
+          lang: htmlLang,
+          position: htmlLang === 'he' || htmlLang === 'ar' ? 'left: 20px' : 'right: 20px'
+        });
+      }
+    } else {
+      console.log('[Navbar] Could not parse background color:', bgColor);
+    }
+    
+    // MOBILE MENU TOGGLE
+   
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (!mobileToggle || !navMenu) {
+      console.log('[Navbar] Mobile toggle or menu not found');
+      return;
+    }
+    
+    console.log('[Navbar] Initializing mobile menu...');
+    
+    // Remove any existing event listeners by cloning the button
+    const newToggle = mobileToggle.cloneNode(true);
+    mobileToggle.parentNode.replaceChild(newToggle, mobileToggle);
+    
+    // Toggle menu on button click - use newToggle now
+    newToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const hamburgerIcon = this.querySelector('.hamburger-icon');
+      const closeIcon = this.querySelector('.close-icon');
+      const isActive = navMenu.classList.contains('active');
+      
+      if (isActive) {
+        // Close menu
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.display = 'block';
+        if (closeIcon) closeIcon.style.display = 'none';
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed');
+      } else {
+        // Open menu
+        navMenu.classList.add('active');
+        if (hamburgerIcon) hamburgerIcon.style.display = 'none';
+        if (closeIcon) closeIcon.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        console.log('[Navbar] Menu opened');
+      }
+    });
+    
+    // Close menu when clicking nav links
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+        const closeIcon = newToggle.querySelector('.close-icon');
+        
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.display = 'block';
+        if (closeIcon) closeIcon.style.display = 'none';
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed (link clicked)');
+      });
+    });
+    
+    // Phone button functionality
+    const phoneBtn = document.querySelector('.phone-header-btn');
+    if (phoneBtn) {
+      phoneBtn.addEventListener('click', function() {
+        // Get phone number from placeholder in page or use default
+        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+        const phoneNumber = phoneLinks.length > 0 
+          ? phoneLinks[0].getAttribute('href').replace('tel:', '')
+          : '[business_phone]';
+        
+        window.location.href = 'tel:' + phoneNumber;
+        console.log('[Navbar] Phone button clicked');
+      });
+    }
+    
+    console.log('[Navbar] Mobile menu initialized successfully');
+  });
+})();
+
+
