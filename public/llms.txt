@@ -1,0 +1,57 @@
+# Dancing Queen — Generative Engine Optimization Map
+
+> A חינוך וריקוד business.
+
+---
+
+## Pages
+
+### Home
+https://dancing-queen-5200f3a3.zappy5.app
+Dancing Queen - אולפן ריקוד מוביל המציע שיעורי בלט, עכשווי, היפ-הופ וג'אז לילדים, מתבגרים ומבוגרים. מדריכים מקצועיים, אווירה תומכת וגישה אישית.
+
+### Services
+https://dancing-queen-5200f3a3.zappy5.app/services
+גלו את מגוון שיעורי הריקוד שלנו: בלט קלאסי, ריקוד עכשווי, היפ-הופ ואורבן, ג'אז תיאטרלי ועוד. תוכניות לכל הגילאים ורמות הניסיון. מדריכים מקצועיים ומחירים משתלמים.
+
+### About
+https://dancing-queen-5200f3a3.zappy5.app/about
+הכירו את הסיפור של Dancing Queen, אולפן הריקוד שנוסד מתוך אהבה וחזון. פגשו את הצוות המקצועי שלנו ולמדו על הערכים שמנחים אותנו בכל יום.
+
+### Contact
+https://dancing-queen-5200f3a3.zappy5.app/contact
+צרו קשר עם Dancing Queen להרשמה לשיעורי ריקוד, שאלות או לקביעת שיעור ניסיון חינם. אנחנו כאן לעזור לכם להתחיל את מסע הריקוד שלכם.
+
+## Legal & Policy
+
+### Privacy Policy
+https://dancing-queen-5200f3a3.zappy5.app/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://dancing-queen-5200f3a3.zappy5.app/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://dancing-queen-5200f3a3.zappy5.app/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+# Business Context (for LLM understanding)
+
+## About Dancing Queen
+Dancing Queen is a business in the חינוך וריקוד industry.
+
+## Target Audience
+כל הגילאים - ילדים, מתבגרים ומבוגרים
+
+## Industry
+חינוך וריקוד
+
+---
+
+# Additional Resources
+
+- **Sitemap**: https://dancing-queen-5200f3a3.zappy5.app/sitemap.xml
+- **Robots.txt**: https://dancing-queen-5200f3a3.zappy5.app/robots.txt
