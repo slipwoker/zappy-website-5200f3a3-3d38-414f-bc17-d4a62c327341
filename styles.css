@@ -219,8 +219,9 @@ img, picture, figure {
   }
 
   /* 7. ABSOLUTE POSITIONING FIXES */
-  [style*="position: absolute"],
-  [style*="position:absolute"] {
+  /* Exclude mobile navigation buttons from positioning fixes */
+  [style*="position: absolute"]:not(.mobile-toggle):not(.phone-header-btn):not(.skip-link),
+  [style*="position:absolute"]:not(.mobile-toggle):not(.phone-header-btn):not(.skip-link) {
     position: relative !important;
     left: auto !important;
     right: auto !important;

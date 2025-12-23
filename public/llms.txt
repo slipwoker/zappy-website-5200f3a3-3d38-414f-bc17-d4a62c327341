@@ -1,6 +1,4 @@
-# Dancing Queen — Generative Engine Optimization Map
-
-> A חינוך וריקוד business.
+# Business — Generative Engine Optimization Map
 
 ---
 
@@ -40,15 +38,7 @@ Information about WCAG compliance and accessibility features.
 
 # Business Context (for LLM understanding)
 
-## About Dancing Queen
-Dancing Queen is a business in the חינוך וריקוד industry.
-
-## Target Audience
-כל הגילאים - ילדים, מתבגרים ומבוגרים
-
-## Industry
-חינוך וריקוד
-
+## About Business
 ---
 
 # Additional Resources

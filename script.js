@@ -900,6 +900,9 @@ window.onload = function() {
 
 
 
+
+
+
 // Navbar Mobile Menu Toggle and Contrast Fix
 (function() {
   // Use 'load' event instead of 'DOMContentLoaded' to ensure we run AFTER all other scripts
@@ -967,20 +970,60 @@ window.onload = function() {
       });
       
       // FIX ICON SIZES - Ensure SVGs are properly sized and visible
-      if (mobileToggle) {
-        // Force positioning for visibility
-        mobileToggle.style.position = 'absolute';
-        mobileToggle.style.top = '15px';
-        mobileToggle.style.zIndex = '1001';
+      // INJECT CRITICAL CSS TO OVERRIDE ANY CONFLICTING RULES
+      const criticalCSS = document.createElement('style');
+      criticalCSS.id = 'zappy-mobile-nav-fix';
+      const htmlLang = document.documentElement.lang || 'en';
+      const isRTL = htmlLang === 'he' || htmlLang === 'ar';
+      
+      criticalCSS.textContent = `
+        /* Override any CSS rules that break mobile navigation positioning */
+        .mobile-toggle,
+        .phone-header-btn {
+          position: absolute !important;
+          top: 15px !important;
+          z-index: 1001 !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+        }
         
-        // Position based on language direction
-        const htmlLang = document.documentElement.lang || 'en';
-        if (htmlLang === 'he' || htmlLang === 'ar') {
-          mobileToggle.style.right = '20px';
-          mobileToggle.style.left = 'auto';
+        .mobile-toggle {
+          ${isRTL ? 'right: 20px !important; left: auto !important;' : 'left: 20px !important; right: auto !important;'}
+        }
+        
+        .phone-header-btn {
+          ${isRTL ? 'left: 20px !important; right: auto !important;' : 'right: 20px !important; left: auto !important;'}
+        }
+        
+        /* Ensure SVG icons are visible */
+        .mobile-toggle svg,
+        .phone-header-btn svg {
+          width: 24px !important;
+          height: 24px !important;
+          display: block !important;
+        }
+      `;
+      
+      // Remove existing fix if present and inject new one
+      const existing = document.getElementById('zappy-mobile-nav-fix');
+      if (existing) existing.remove();
+      document.head.appendChild(criticalCSS);
+      
+      console.log('[Navbar] Critical CSS injected for mobile nav positioning');
+      
+      if (mobileToggle) {
+        // Also set inline styles as backup
+        mobileToggle.style.setProperty('position', 'absolute', 'important');
+        mobileToggle.style.setProperty('top', '15px', 'important');
+        mobileToggle.style.setProperty('z-index', '1001', 'important');
+        
+        if (isRTL) {
+          mobileToggle.style.setProperty('right', '20px', 'important');
+          mobileToggle.style.setProperty('left', 'auto', 'important');
         } else {
-          mobileToggle.style.left = '20px';
-          mobileToggle.style.right = 'auto';
+          mobileToggle.style.setProperty('left', '20px', 'important');
+          mobileToggle.style.setProperty('right', 'auto', 'important');
         }
         
         const hamburgerIcon = mobileToggle.querySelector('.hamburger-icon');
@@ -1006,19 +1049,17 @@ window.onload = function() {
       }
       
       if (phoneBtn) {
-        // Force positioning for visibility
-        phoneBtn.style.position = 'absolute';
-        phoneBtn.style.top = '15px';
-        phoneBtn.style.zIndex = '1001';
+        // Also set inline styles as backup
+        phoneBtn.style.setProperty('position', 'absolute', 'important');
+        phoneBtn.style.setProperty('top', '15px', 'important');
+        phoneBtn.style.setProperty('z-index', '1001', 'important');
         
-        // Position opposite to mobile toggle
-        const htmlLang = document.documentElement.lang || 'en';
-        if (htmlLang === 'he' || htmlLang === 'ar') {
-          phoneBtn.style.left = '20px';
-          phoneBtn.style.right = 'auto';
+        if (isRTL) {
+          phoneBtn.style.setProperty('left', '20px', 'important');
+          phoneBtn.style.setProperty('right', 'auto', 'important');
         } else {
-          phoneBtn.style.right = '20px';
-          phoneBtn.style.left = 'auto';
+          phoneBtn.style.setProperty('right', '20px', 'important');
+          phoneBtn.style.setProperty('left', 'auto', 'important');
         }
         
         const phoneIcon = phoneBtn.querySelector('svg');
@@ -1114,5 +1155,8 @@ window.onload = function() {
     console.log('[Navbar] Mobile menu initialized successfully');
   });
 })();
+
+
+
 
 
